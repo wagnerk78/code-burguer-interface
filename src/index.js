@@ -5,8 +5,8 @@ import GlobalStyle from './styles/globalStyles'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-<>
-<Login />
-<GlobalStyle />
-</>
+  <>
+    <Login />
+    <GlobalStyle />
+  </>
 )
