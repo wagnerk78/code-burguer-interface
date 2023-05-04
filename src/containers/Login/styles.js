@@ -23,6 +23,11 @@ export const ContainerItens = styled.div`
   flex-direction: column;
   justify-content: center;
 
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
   h1 {
     font-style: normal;
     font-weight: 500;
@@ -50,7 +55,7 @@ export const Input = styled.input`
   background: #ffffff;
   box-shadow: 3px 3px 10px rgba(74, 144, 226, 0.19);
   border-radius: 5px;
-  border: none;
+  border: ${(props) => (props.error ? '2px solid  #cc1717' : 'none')};
   padding-left: 10px;
 `
 
@@ -67,8 +72,8 @@ export const Button = styled.button`
   line-height: 19px;
   text-align: center;
   color: #eeeeee;
-  margin-top: 75px;
-  margin-bottom: 25px;
+  margin-top: 65px;
+  margin-bottom: 15px;
 
   &:hover {
     opacity: 0.8;
@@ -90,4 +95,12 @@ export const SignInLink = styled.p`
     cursor: pointer;
     text-decoration: underline;
   }
+`
+export const ErrorMensage = styled.p`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #cc1717;
+  margin-top: 2px;
 `
