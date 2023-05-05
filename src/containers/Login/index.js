@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import api from '../../services/api'
 
 import LoginImg from '../../assets/image-login.svg'
 import Logo from '../../assets/logo.svg'
@@ -35,7 +36,14 @@ function Login() {
   } = useForm({
     resolver: yupResolver(schema)
   })
-  const onSubmit = (data) => console.log(data)
+  const onSubmit = async (clientData) => {
+    const response = await api.post('sessions', {
+      email: clientData.email,
+      password: clientData.password
+    })
+    console.log(response)
+  }
+
   return (
     <Container>
       <LoginImage src={LoginImg} alt="imagem-login" />
