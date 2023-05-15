@@ -10,7 +10,7 @@ export const Container = styled.div`
   align-items: center;
 `
 
-export const LoginImage = styled.img`
+export const RegisterImage = styled.img`
   height: 70%;
 `
 
@@ -23,6 +23,11 @@ export const ContainerItens = styled.div`
   flex-direction: column;
   justify-content: center;
 
+  img {
+    width: 50%;
+    margin-left: 100px;
+  }
+
   form {
     display: flex;
     flex-direction: column;
@@ -31,11 +36,11 @@ export const ContainerItens = styled.div`
   h1 {
     font-style: normal;
     font-weight: 500;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 28px;
     color: #ffffff;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 5px;
   }
 `
 
@@ -45,7 +50,7 @@ export const Label = styled.p`
   font-size: 12px;
   line-height: 14px;
   color: #ffffff;
-  margin-top: 28px;
+  margin-top: 5px;
   margin-bottom: 5px;
 `
 
@@ -56,13 +61,13 @@ export const Input = styled.input`
   box-shadow: 3px 3px 10px rgba(74, 144, 226, 0.19);
   border-radius: 5px;
   border: ${(props) => (props.error ? '2px solid  #cc1717' : 'none')};
-  padding-left: 10px;
+  padding-left: 5px;
 `
 
 export const SignInLink = styled.p`
   font-style: normal;
   font-weight: 300;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 16px;
   color: #ffffff;
 
@@ -74,7 +79,7 @@ export const SignInLink = styled.p`
 export const ErrorMensage = styled.p`
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 16px;
   color: #cc1717;
   margin-top: 2px;
