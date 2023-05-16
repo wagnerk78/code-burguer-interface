@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import api from '../../services/api'
+import { toast } from 'react-toastify'
+import { useUser } from '../../hooks/UserContext'
 
 import Button from '../../components/Button'
 import LoginImg from '../../assets/image-login.svg'
@@ -20,6 +22,8 @@ import {
 } from './styles'
 
 function Login() {
+  const { putUserData, userData } = useUser()
+
   const schema = Yup.object().shape({
     email: Yup.string()
       .email('Digite um email válido.')
@@ -37,11 +41,19 @@ function Login() {
     resolver: yupResolver(schema)
   })
   const onSubmit = async (clientData) => {
-    const response = await api.post('sessions', {
-      email: clientData.email,
-      password: clientData.password
-    })
-    console.log(response)
+    const { data } = await toast.promise(
+      api.post('sessions', {
+        email: clientData.email,
+        password: clientData.password
+      }),
+      {
+        pending: 'Aguarde estamos verificando seus dados!',
+        success: 'Olá! Sirva-se! 👌',
+        error: 'Verifique seu e-mail e senha 🤯'
+      }
+    )
+    putUserData(data)
+    console.log(userData)
   }
 
   return (
