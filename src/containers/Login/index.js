@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import api from '../../services/api'
 import { toast } from 'react-toastify'
 import { useUser } from '../../hooks/UserContext'
-
+import { Link } from 'react-router-dom'
 import Button from '../../components/Button'
 import LoginImg from '../../assets/image-login.svg'
 import Logo from '../../assets/logo.svg'
@@ -22,12 +22,12 @@ import {
 } from './styles'
 
 function Login() {
-  const { putUserData, userData } = useUser()
+  const { putUserData } = useUser()
 
   const schema = Yup.object().shape({
     email: Yup.string()
       .email('Digite um email válido.')
-      .required('O e-mil é obrigatório.'),
+      .required('O e-mail é obrigatório.'),
     password: Yup.string()
       .required('A senha é obrigatória')
       .min(6, 'A senha deve ter no mínimo 6 caracteres.')
@@ -53,7 +53,6 @@ function Login() {
       }
     )
     putUserData(data)
-    console.log(userData)
   }
 
   return (
@@ -85,7 +84,10 @@ function Login() {
           </Button>
         </form>
         <SignInLink>
-          Não possui conta? <a>Sign Up</a>
+          Não possui conta?{' '}
+          <Link style={{ color: 'white' }} to="/cadastro">
+            Sign Up
+          </Link>
         </SignInLink>
       </ContainerItens>
     </Container>
