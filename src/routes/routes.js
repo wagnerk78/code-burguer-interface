@@ -6,11 +6,10 @@ import {
   BrowserRouter as Router
 } from 'react-router-dom/cjs/react-router-dom.min'
 
-import Login from '../containers/Login'
-import Register from '../containers/Register'
-import Home from '../containers/Home'
+import { Login, Register, Home, Products } from '../containers'
+
 import PrivateRoute from './private-routes'
-import Products from '../containers/Products'
+
 function Routes() {
   return (
     <Router>
