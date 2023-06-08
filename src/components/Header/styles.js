@@ -48,4 +48,5 @@ export const PageLinkExit = styled.a`
   font-size: 14px;
   line-height: 16px;
   color: #9758a6;
+  cursor: pointer;
 `
