@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import ReactSelect from 'react-select'
-import { Container, Input, Label, ButtonStyles, LabelUpload } from './styles'
+import {
+  Container,
+  Input,
+  Label,
+  ButtonStyles,
+  LabelUpload,
+  ContainerInput
+} from './styles'
 import api from '../../../services/api'
 import * as Yup from 'yup'
 import { useForm, Controller } from 'react-hook-form'
@@ -10,18 +17,21 @@ import { ErrorMensage } from '../../../components'
 import { toast } from 'react-toastify'
 import { useHistory } from 'react-router-dom'
 
-function NewProduct() {
+function EditProduct() {
   const [fileName, setFileName] = useState(null)
   const [categories, setCategories] = useState([])
-  const { push } = useHistory()
-
+  const {
+    push,
+    location: {
+      state: { product }
+    }
+  } = useHistory()
+  console.log(product)
   const schema = Yup.object().shape({
     name: Yup.string().required('O nome é obrigatório.'),
     price: Yup.string().required('O preço é obrigatório.'),
     category: Yup.object().required('A categoria é obrigatória.'),
-    file: Yup.mixed().test('required', 'Carregue um arquivo', (value) => {
-      return value && value.length > 0
-    })
+    offer: Yup.bool()
   })
 
   const {
@@ -39,12 +49,16 @@ function NewProduct() {
     productDataFormData.append('price', data.price)
     productDataFormData.append('category_id', data.category.id)
     productDataFormData.append('file', data.file[0])
+    productDataFormData.append('offer', data.offer)
 
-    await toast.promise(api.post('products', productDataFormData), {
-      pending: 'Criando novo produto...',
-      success: 'Produto cadastrado com sucesso!',
-      error: 'Ih! Deu ruim! Tente novamente!'
-    })
+    await toast.promise(
+      api.put(`products/${product.id}`, productDataFormData),
+      {
+        pending: 'Editando novo produto...',
+        success: 'Produto editado com sucesso!',
+        error: 'Ih! Deu ruim! Tente novamente!'
+      }
+    )
 
     setTimeout(() => {
       push('/listar-produtos')
@@ -65,12 +79,20 @@ function NewProduct() {
       <form noValidate onSubmit={handleSubmit(onSubmit)}>
         <div>
           <Label>Nome</Label>
-          <Input type="text" {...register('name')} />
+          <Input
+            type="text"
+            {...register('name')}
+            defaultValue={product.name}
+          />
           <ErrorMensage>{errors.name?.message}</ErrorMensage>
         </div>
         <div>
           <Label>Preço</Label>
-          <Input type="number" {...register('price')} />
+          <Input
+            type="number"
+            {...register('price')}
+            defaultValue={product.price}
+          />
           <ErrorMensage>{errors.price?.message}</ErrorMensage>
         </div>
         <div>
@@ -95,6 +117,7 @@ function NewProduct() {
           <Controller
             name="category"
             control={control}
+            defaultValue={product.category}
             render={({ field }) => {
               return (
                 <ReactSelect
@@ -103,16 +126,25 @@ function NewProduct() {
                   getOptionLabel={(cat) => cat.name}
                   getOptionValue={(cat) => cat.id}
                   placeholder="Selecione uma categoria"
+                  defaultValue={product.category}
                 />
               )
             }}
           ></Controller>
           <ErrorMensage>{errors.category?.message}</ErrorMensage>
         </div>
-        <ButtonStyles>Adicionar Produto</ButtonStyles>
+        <ContainerInput>
+          <input
+            type="checkbox"
+            defaultChecked={product.offer}
+            {...register('offer')}
+          />
+          <Label> Está em oferta? </Label>
+        </ContainerInput>
+        <ButtonStyles>Editar Produto</ButtonStyles>
       </form>
     </Container>
   )
 }
 
-export default NewProduct
+export default EditProduct
