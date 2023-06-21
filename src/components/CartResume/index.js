@@ -5,11 +5,12 @@ import formatCurrency from '../../utils/formatCurrency'
 import { useCart } from '../../hooks/CartContext'
 import api from './../../services/api'
 import { toast } from 'react-toastify'
+import { useHistory } from 'react-router-dom'
 
 export function CartResume() {
   const [finalPrice, setFinalPrice] = useState(0)
   const [deliveryTax] = useState(5)
-
+  const { push } = useHistory()
   const { cartProducts } = useCart()
 
   useEffect(() => {
@@ -30,6 +31,10 @@ export function CartResume() {
       success: 'Pedido já está sendo preparado',
       error: 'Ih! Alguma coisa não deu certo. Refaça seu pedido.'
     })
+
+    setTimeout(() => {
+      push('/')
+    }, 2000)
   }
 
   return (

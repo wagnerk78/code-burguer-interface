@@ -46,6 +46,8 @@ export const ContainerItens = styled.div`
 
 export const Image = styled.img`
   width: 200px;
+  height: 200px;
+  border-radius: 10px;
   margin-bottom: 16px;
 `
 
